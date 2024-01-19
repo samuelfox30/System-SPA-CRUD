@@ -5,6 +5,9 @@ app_index = Blueprint('index', __name__)
 #------------------FUNÇÃO PRINCIPAL------------------#
 @app_index.route('/')
 def index():
+    """ from backend.database.beforelogin.databasesmanager.process import SystemDatabase
+    db_intance = SystemDatabase()
+    db_intance.excluir_manual('samuelfoxgama@hotmail.com') """
     if 'user' in session:
         return redirect(url_for('profile.profile'))
     return render_template('pages/beforelogin/index.html')

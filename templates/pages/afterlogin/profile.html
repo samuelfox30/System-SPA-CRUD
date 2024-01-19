@@ -1,0 +1,161 @@
+<!--MAIN FILE-->
+{% extends 'componentes/afterlogin/base.html' %}
+<!--TITLE-->
+{% block title %}Home{% endblock %}
+
+
+<!----------------------------START BODY---------------------------->
+{% block content %}
+<link href="{{ url_for('static', filename='css/pages/afterlogin/profile.css') }}" rel="stylesheet">
+
+<br>
+
+<!-- Barra de pesquisa -->
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Pesquisar contato" aria-label="Pesquisar contato" aria-describedby="button-pesquisar">
+    <button class="btn btn-outline-secondary" type="button" id="button-pesquisar"><i class="fas fa-search"></i> Pesquisar</button>
+</div>
+
+<br>
+
+<!-- Botão flutuante para adicionar novo contato -->
+<button type="button" class="btn btn-primary btn-float" data-bs-toggle="modal" data-bs-target="#addContactModal">
+    <i class="fas fa-plus"></i> Adicionar Contato
+</button>
+
+<br>
+
+<!-- Tabela de contatos -->
+<table class="table">
+    <!-- Botão para selecionar todos os contatos -->
+    <thead>
+        <tr>
+            <th scope="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkSelecionarTodos">
+                </div>
+            </th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Adicione mais linhas conforme necessário para exibir os contatos -->
+
+        <!-- Linha de exemplo -->
+        <tr>
+            <td><input type="checkbox" class="form-check-input"></td>
+            <td>Nome do Contato</td>
+            <td>Email do contato</td>
+            <td>Endereço do Contato</td>
+            <td>Telefone do Contato</td>
+            <td>
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editContactModal">
+                    Editar
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal para adicionar novo contato -->
+<div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Novo cadastro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" class="form-control" id="endereco" placeholder="Informe seu endereço">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" class="form-control" id="telefone" placeholder="Informe seu telefone">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar contato -->
+<div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Contato</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="editNome">Nome</label>
+                        <input type="text" class="form-control" id="editNome" placeholder="Informe o novo nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEndereco">Endereço</label>
+                        <input type="text" class="form-control" id="editEndereco" placeholder="Informe o novo endereço">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTelefone">Telefone</label>
+                        <input type="tel" class="form-control" id="editTelefone" placeholder="Informe o novo telefone">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal de confirmação de exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Exclusão</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que deseja excluir este contato?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Script para habilitar modals -->
+<script>
+    var addContactModal = new bootstrap.Modal(document.getElementById('addContactModal'));
+    var editContactModal = new bootstrap.Modal(document.getElementById('editContactModal'));
+    var confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="{{ url_for('static', filename='js/pages/afterlogin/profile.css') }}"></script>
+
+{% endblock %}
+<!----------------------------END BODY---------------------------->

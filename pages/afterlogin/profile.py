@@ -7,7 +7,8 @@ app_profile = Blueprint('profile', __name__)
 def profile():
     if 'user' in session:
         usuario = session['user']
-        return f'Oi {usuario}'
+        # Carregar dados e passar para o html
+        return render_template('pages/afterlogin/profile.html')
     else:
         return redirect(url_for('index.index'))
 

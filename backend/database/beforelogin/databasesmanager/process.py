@@ -76,3 +76,14 @@ class SystemDatabase:
             linhas = self.cursor.fetchall()
             for linha in linhas:
                 print(linha)
+
+
+    # ------ FUNÇÂO DE EXCLUSÃO MANUAL
+    def excluir_manual(self, email):
+        try:
+            self.cursor.execute('DELETE FROM USERS WHERE EMAIL = ?', (email,))
+            print(f'Usuário com o email {email} excluído com sucesso.')
+        except Exception as error:
+            print(f'Ocorreu um erro ao excluir o usuário:\n{error}')
+        finally:
+            self.conn.commit()
