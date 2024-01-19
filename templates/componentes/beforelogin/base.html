@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Título Padrão{% endblock %}</title>
+    <link href="{{ url_for('static', filename='vendors/bootstrap-5.0.2/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/beforelogin/base.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/beforelogin/header.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/beforelogin/footer.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<!--HEADER-->
+{% include 'componentes/beforelogin/header.html' %}
+
+<!--CONTENT-->
+<div class="content">
+    <div class="into-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<!--SCRIPTS-->
+<script src="{{ url_for('static', filename='vendors/bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
+
+<!--FOOTER-->
+{% include 'componentes/beforelogin/footer.html' %}
+
+</body>
+</html>
