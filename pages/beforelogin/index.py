@@ -1,10 +1,12 @@
-from flask import Flask, Blueprint, render_template, url_for, redirect, request
+from flask import Flask, Blueprint, render_template, url_for, redirect, request, session
 
 app_index = Blueprint('index', __name__)
 
 #------------------FUNÇÃO PRINCIPAL------------------#
 @app_index.route('/')
 def index():
+    if 'user' in session:
+        return redirect(url_for('profile.profile'))
     return render_template('pages/beforelogin/index.html')
 
 
@@ -68,11 +70,12 @@ def logar():
                     return render_template('pages/beforelogin/index.html', mensagem=mensagem_nao_cadastrado)
                 else:
                     if db_intance.permitir_login(Usuario_para_login):
-                        # Se logado...
+                        session['user'] = email
+                        return redirect(url_for('profile.profile'))
                         pass
                     else:
-                        # Se não logado...
-                        pass
+                        mensagem_login_nao_permitido = 'Email ou senha incorreta!'
+                        return render_template('pages/beforelogin/index.html', mensagem=mensagem_login_nao_permitido)
                 
 
         except Exception as error:
