@@ -11,7 +11,7 @@ def profile():
         return render_template('pages/afterlogin/profile.html')
     else:
         return redirect(url_for('index.index'))
-
+    
     
 @app_profile.route('/logout')
 def logout():

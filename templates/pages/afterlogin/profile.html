@@ -73,23 +73,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="/adicionar" method="post">
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Informe seu nome">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Informe o nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Informe o email">
                     </div>
                     <div class="form-group">
                         <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" id="endereco" placeholder="Informe seu endereço">
+                        <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Informe o endereço">
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" class="form-control" id="telefone" placeholder="Informe seu telefone">
+                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="Informe o telefone">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </div>
@@ -146,16 +150,8 @@
     </div>
 </div>
 
-
-<!-- Script para habilitar modals -->
-<script>
-    var addContactModal = new bootstrap.Modal(document.getElementById('addContactModal'));
-    var editContactModal = new bootstrap.Modal(document.getElementById('editContactModal'));
-    var confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-</script>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<script src="{{ url_for('static', filename='js/pages/afterlogin/profile.css') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/afterlogin/profile.js') }}"></script>
 
 {% endblock %}
 <!----------------------------END BODY---------------------------->
