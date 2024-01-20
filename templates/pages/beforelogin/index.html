@@ -80,6 +80,10 @@
     <div class="alert alert-danger" role="alert" style="margin-top: 20px;">
         {{ mensagem|safe }}
     </div>
+{% elif mensagem_cadastrado_com_sucesso %}
+    <div class="alert alert-success" role="alert" style="margin-top: 20px;">
+        {{ mensagem_cadastrado_com_sucesso|safe }}
+    </div>
 {% endif %}
 
 <script src="{{ url_for('static', filename='js/pages/beforelogin/index.js') }}"></script>

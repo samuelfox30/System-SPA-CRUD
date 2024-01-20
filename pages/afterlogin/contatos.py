@@ -14,10 +14,12 @@ def contatos():
             print(f'Dados recebidos:\nNome: {nome}\Email: {email}\nEndereco: {endereco}\nTelefone: {telefone}')
         except Exception as error:
             print(f'Erro ao receber dados do formulario: {error}')
+        finally:
+            return redirect(url_for('profile.profile'))
     else:
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile.profile'))
     
     
 @app_contatos.route('/editar')
 def logout():
-    pass
+    return 'teste'

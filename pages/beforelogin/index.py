@@ -35,8 +35,10 @@ def cadastrar():
                     Usuario_para_cadastro = UserCadastro(nome, email, senha)
                     from backend.database.beforelogin.databasesmanager.process import SystemDatabase
                     db_intance = SystemDatabase()
-                    if db_intance.verificar_existencia(Usuario_para_cadastro):                        
+                    if db_intance.verificar_existencia(Usuario_para_cadastro):                 
                         db_intance.cadastrar(Usuario_para_cadastro)
+                        mensagem_cadastrado_com_sucesso = 'Seu cadastro foi realizado com exito!'
+                        return render_template('pages/beforelogin/index.html', mensagem_cadastrado_com_sucesso=mensagem_cadastrado_com_sucesso)
                     else:
                         mensagem_ja_cadastrado_anteriormente = 'Seu email ja está cadastrado em nossa plataforma!'
                         return render_template('pages/beforelogin/index.html', mensagem=mensagem_ja_cadastrado_anteriormente)
@@ -77,7 +79,7 @@ def logar():
                         return redirect(url_for('profile.profile'))
                         pass
                     else:
-                        mensagem_login_nao_permitido = 'Email ou senha incorreta!'
+                        mensagem_login_nao_permitido = 'Senha incorreta!'
                         return render_template('pages/beforelogin/index.html', mensagem=mensagem_login_nao_permitido)
                 
 
