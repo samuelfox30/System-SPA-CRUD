@@ -16,7 +16,17 @@
     <button class="btn btn-outline-secondary" type="button" id="button-pesquisar"><i class="fas fa-search"></i> Pesquisar</button>
 </div>
 
-<br>
+{% if mensagem_error %}
+    <div class="alert alert-danger" role="alert" style="margin-top: 20px;">
+        {{ mensagem_error|safe }}
+    </div>
+{% elif mensagem_sucesso %}
+    <div class="alert alert-success" role="alert" style="margin-top: 20px;">
+        {{ mensagem_sucesso|safe }}
+    </div>
+{% else %}
+    <br>
+{% endif %}
 
 <!-- Botão flutuante para adicionar novo contato -->
 <button type="button" class="btn btn-primary btn-float" data-bs-toggle="modal" data-bs-target="#addContactModal">
@@ -76,7 +86,7 @@
                 <form action="/adicionar" method="post">
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Informe o nome">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Informe o nome" required>
                     </div>
                     <div class="form-group">
                         <label for="endereco">Email</label>
