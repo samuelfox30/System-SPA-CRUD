@@ -1,40 +1,38 @@
 <!--MAIN FILE-->
-{% extends 'componentes/afterlogin/base.html' %}
+{% extends 'componentes/private/base.html' %}
 <!--TITLE-->
 {% block title %}Home{% endblock %}
 
 
 <!----------------------------START BODY---------------------------->
 {% block content %}
-<link href="{{ url_for('static', filename='css/pages/afterlogin/profile.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pages/private/profile.css') }}" rel="stylesheet">
 
 <br>
 
-<!-- Barra de pesquisa -->
 <div class="input-group mb-3">
     <input type="text" class="form-control" placeholder="Pesquisar contato" aria-label="Pesquisar contato" aria-describedby="button-pesquisar">
     <button class="btn btn-outline-secondary" type="button" id="button-pesquisar"><i class="fas fa-search"></i> Pesquisar</button>
+    
+    <!-- Botão flutuante para adicionar novo contato -->
+    <button type="button" class="btn btn-primary ml-2 btn-float" data-bs-toggle="modal" data-bs-target="#addContactModal">
+        <i class="fas fa-plus"></i> Adicionar Contato
+    </button>
 </div>
 
 {% if mensagem_error %}
     <div class="alert alert-danger" role="alert" style="margin-top: 20px;">
         {{ mensagem_error|safe }}
     </div>
-{% elif mensagem_sucesso %}
+{% elif mensagem_success %}
     <div class="alert alert-success" role="alert" style="margin-top: 20px;">
-        {{ mensagem_sucesso|safe }}
+        {{ mensagem_success|safe }}
     </div>
 {% else %}
     <br>
 {% endif %}
 
-<!-- Botão flutuante para adicionar novo contato -->
-<button type="button" class="btn btn-primary btn-float" data-bs-toggle="modal" data-bs-target="#addContactModal">
-    <i class="fas fa-plus"></i> Adicionar Contato
-</button>
-
-<br>
-
+<div class="content-table">
 <!-- Tabela de contatos -->
 <table class="table">
     <!-- Botão para selecionar todos os contatos -->
@@ -53,26 +51,26 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Adicione mais linhas conforme necessário para exibir os contatos -->
-
-        <!-- Linha de exemplo -->
-        <tr>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td>Nome do Contato</td>
-            <td>Email do contato</td>
-            <td>Endereço do Contato</td>
-            <td>Telefone do Contato</td>
-            <td>
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editContactModal">
-                    Editar
-                </button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                    Excluir
-                </button>
-            </td>
-        </tr>
+        {% for contato in contatos %}
+            <tr>
+                <td><input type="checkbox" class="form-check-input"></td>
+                <td>{{ contato[1] }}</td>
+                <td>{{ contato[2] }}</td>
+                <td>{{ contato[3] }}</td>
+                <td>{{ contato[4] }}</td>
+                <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editContactModal{{ contato['id'] }}">
+                        Editar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ contato['id'] }}">
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
+</div>
 
 <!-- Modal para adicionar novo contato -->
 <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,7 +81,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/adicionar" method="post">
+                <form action="/adicionarcontato" method="post">
                     <div class="form-group">
                         <label for="nome">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="Informe o nome" required>
@@ -161,7 +159,7 @@
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<script src="{{ url_for('static', filename='js/pages/afterlogin/profile.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/private/profile.js') }}"></script>
 
 {% endblock %}
 <!----------------------------END BODY---------------------------->

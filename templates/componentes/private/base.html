@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Título Padrão{% endblock %}</title>
     <link href="{{ url_for('static', filename='vendors/bootstrap-5.0.2/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/componentes/afterlogin/base.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/componentes/afterlogin/header.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/componentes/afterlogin/footer.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/private/base.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/private/header.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/componentes/private/footer.css') }}" rel="stylesheet">
 </head>
 <body>
 
 <!--HEADER-->
-{% include 'componentes/afterlogin/header.html' %}
+{% include 'componentes/private/header.html' %}
 
 <!--CONTENT-->
 <div class="content">
@@ -25,7 +25,7 @@
 <script src="{{ url_for('static', filename='vendors/bootstrap-5.0.2/js/bootstrap.bundle.min.js') }}"></script>
 
 <!--FOOTER-->
-{% include 'componentes/afterlogin/footer.html' %}
+{% include 'componentes/private/footer.html' %}
 
 </body>
 </html>

@@ -6,9 +6,10 @@ app_profile = Blueprint('profile', __name__)
 @app_profile.route('/profile')
 def profile():
     if 'user' in session:
-        usuario = session['user']
-        # Carregar dados e passar para o html
-        return render_template('pages/afterlogin/profile.html')
+        sessao = session['user']
+        from pages.private.profile.profile_manager import exibircontatos
+        contatos = exibircontatos(sessao)
+        return render_template('pages/private/profile.html', contatos=contatos)
     else:
         return redirect(url_for('index.index'))
     

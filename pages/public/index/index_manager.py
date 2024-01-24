@@ -16,8 +16,10 @@ def Cadastrar(nome, email, senha):
                         return {'Status': False, 'Message': 'Seu email ja está cadastrado no sistema'}
                     else:
                         # Se tudo der certo
-                        db_instance.cadastrar(user)
-                        return {'Status': True, 'Message': 'Cadastro realizado com exito!'}
+                        if db_instance.cadastrar(user):
+                            return {'Status': True, 'Message': 'Cadastro realizado com exito!'}
+                        else:
+                            return {'Status': False}
                 else:
                     return {'Status': False, 'Message': result_senha_check}
             else:

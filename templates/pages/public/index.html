@@ -1,12 +1,12 @@
 <!--MAIN FILE-->
-{% extends 'componentes/beforelogin/base.html' %}
+{% extends 'componentes/public/base.html' %}
 <!--TITLE-->
 {% block title %}Home{% endblock %}
 
 
 <!----------------------------START BODY---------------------------->
 {% block content %}
-<link href="{{ url_for('static', filename='css/pages/beforelogin/index.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/pages/public/index.css') }}" rel="stylesheet">
 
 <div class="container mt-5">
     <h2 class="display-4">Bem-Vindo ao Sistema</h2>
@@ -86,7 +86,7 @@
     </div>
 {% endif %}
 
-<script src="{{ url_for('static', filename='js/pages/beforelogin/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/public/index.js') }}"></script>
 
 {% endblock %}
 <!----------------------------END BODY---------------------------->

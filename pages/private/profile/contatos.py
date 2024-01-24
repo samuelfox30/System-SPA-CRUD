@@ -3,27 +3,28 @@ from flask import Flask, Blueprint, render_template, url_for, redirect, request,
 app_contatos = Blueprint('contatos', __name__)
 
 #------------------FUNÇÃO PRINCIPAL------------------#
-@app_contatos.route('/adicionar', methods=['POST', 'GET'])
-def contatos():
+@app_contatos.route('/adicionarcontato', methods=['POST', 'GET'])
+def adicionar_contatos():
     if request.method == 'POST':
-        try:
-            nome = request.form.get('nome')
-            email = request.form.get('email')
-            endereco = request.form.get('endereco')
-            telefone = request.form.get('telefone')
-            if not nome:
-                mensagem_minimo_nome = 'O mínimo para criar um contato é criar o nome'
-                return render_template('pages/afterlogin/profile.html', mensagem_error=mensagem_minimo_nome)
-            else:
-                usuario = session['user']
-                print(f'\n\nUsuario: {usuario}')
-                from backend.system.afterlogin.objects import Contato
-                contato = Contato(nome, email, endereco, telefone)
-                from backend.database.afterlogin.databasemanager.process import SystemDatabase
-                db_instance = SystemDatabase(usuario)
-                db_instance.cadastrar(contato)
-        except Exception as error:
-            print(f'Erro ao receber dados do formulario: {error}')
+        nome = request.form.get('nome')
+        email = request.form.get('email')
+        endereco = request.form.get('endereco')
+        telefone = request.form.get('telefone')
+        sessao = session['user']
+        
+        # Carregando dados para tabela
+        from pages.private.profile.profile_manager import exibircontatos
+        contatos = exibircontatos(sessao)
+
+        from pages.private.profile.contatos_manager import adicionarcontato
+        result = adicionarcontato(nome, email, endereco, telefone, sessao)
+        if result['Status'] == False:
+            mensagem_error = result['Message']
+            return render_template('pages/private/profile.html', contatos=contatos, mensagem_error=mensagem_error)
+        elif result['Status'] == True:
+            mensagem_success = result['Message']
+            return render_template('pages/private/profile.html', contatos=contatos, mensagem_success=mensagem_success)
+
     
     return redirect(url_for('profile.profile'))
     

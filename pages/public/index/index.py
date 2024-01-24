@@ -7,7 +7,7 @@ app_index = Blueprint('index', __name__)
 def index():
     if 'user' in session:
         return redirect(url_for('profile.profile'))
-    return render_template('pages/beforelogin/index.html')
+    return render_template('pages/public/index.html')
 
 
 #------------------FUNÇÃO CADASTRAR------------------#
@@ -22,10 +22,10 @@ def cadastrar():
         result = Cadastrar(nome, email, senha)
         if result['Status'] == False:
             mensagem_error = result['Message']
-            return render_template('pages/beforelogin/index.html', mensagem_error=mensagem_error)
+            return render_template('pages/public/index.html', mensagem_error=mensagem_error)
         elif result['Status'] == True:
             mensagem_success = result['Message']
-            return render_template('pages/beforelogin/index.html', mensagem_success=mensagem_success)
+            return render_template('pages/public/index.html', mensagem_success=mensagem_success)
 
     return redirect(url_for('index.index'))
 
@@ -41,9 +41,9 @@ def logar():
         result = Logar(email, senha)
         if result['Status'] == False:
             mensagem_error = result['Message']
-            return render_template('pages/beforelogin/index.html', mensagem_error=mensagem_error)
+            return render_template('pages/public/index.html', mensagem_error=mensagem_error)
         elif result['Status'] == True:
             session['user'] = email
-            return redirect(url_for('profile.profile'))
+            return redirect(url_for('adicionar_contatos.adicionar_contatos'))
         
     return redirect(url_for('index.index'))
