@@ -1,9 +1,9 @@
 from flask import Flask, Blueprint, url_for
 
 # Import Páginas
-from pages.beforelogin.index import app_index
-from pages.afterlogin.profile import app_profile
-from pages.afterlogin.contatos import app_contatos
+from pages.public.index.index import app_index
+from pages.private.profile.profile import app_profile
+from pages.private.profile.contatos import app_contatos
 
 app = Flask(__name__)
 app.secret_key = 'minhasecretkeyemuitodificil'

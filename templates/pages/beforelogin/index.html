@@ -76,13 +76,13 @@
     </div>
 </div>
 
-{% if mensagem %}
+{% if mensagem_error %}
     <div class="alert alert-danger" role="alert" style="margin-top: 20px;">
-        {{ mensagem|safe }}
+        {{ mensagem_error|safe }}
     </div>
-{% elif mensagem_cadastrado_com_sucesso %}
+{% elif mensagem_success %}
     <div class="alert alert-success" role="alert" style="margin-top: 20px;">
-        {{ mensagem_cadastrado_com_sucesso|safe }}
+        {{ mensagem_success|safe }}
     </div>
 {% endif %}
 

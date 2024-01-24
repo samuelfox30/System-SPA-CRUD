@@ -22,9 +22,9 @@ class SystemDatabase:
             self.cursor.execute('SELECT * FROM USERS WHERE EMAIL = ?', (email,))
             result = self.cursor.fetchone()
             if not result:
-                return True
-            else:
                 return False
+            else:
+                return True
         except Exception as error:
             print(f'Ocorreu um erro ao verificar a existência de um email: {error}')
             return False

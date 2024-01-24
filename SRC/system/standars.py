@@ -1,6 +1,13 @@
 import re
 
-def verificar_senha(senha):
+
+def check_standar_email(email):
+    padrao = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    correspondencia = re.match(padrao, email)
+    return bool(correspondencia)
+
+
+def check_standar_senha(senha):
     exigencias = []
 
     if len(senha) < 8:
@@ -22,4 +29,3 @@ def verificar_senha(senha):
         return "<br>".join(exigencias)
 
     return None
-
