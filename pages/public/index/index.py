@@ -18,7 +18,7 @@ def cadastrar():
         nome = request.form.get('nome')
         email = request.form.get('email')
         senha = request.form.get('senha')
-        from index_manager import Cadastrar
+        from pages.public.index.index_manager import Cadastrar
         result = Cadastrar(nome, email, senha)
         if result['Status'] == False:
             mensagem_error = result['Message']
@@ -37,7 +37,7 @@ def logar():
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
-        from index_manager import Logar
+        from pages.public.index.index_manager import Logar
         result = Logar(email, senha)
         if result['Status'] == False:
             mensagem_error = result['Message']
