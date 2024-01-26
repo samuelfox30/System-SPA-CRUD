@@ -44,6 +44,6 @@ def logar():
             return render_template('pages/public/index.html', mensagem_error=mensagem_error)
         elif result['Status'] == True:
             session['user'] = email
-            return redirect(url_for('adicionar_contatos.adicionar_contatos'))
+            return redirect(url_for('profile.profile'))
         
     return redirect(url_for('index.index'))

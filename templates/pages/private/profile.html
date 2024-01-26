@@ -11,8 +11,8 @@
 <br>
 
 <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Pesquisar contato" aria-label="Pesquisar contato" aria-describedby="button-pesquisar">
-    <button class="btn btn-outline-secondary" type="button" id="button-pesquisar"><i class="fas fa-search"></i> Pesquisar</button>
+    <input name="dado_de_pesquisa" nametype="text" class="form-control" placeholder="Pesquisar contato" aria-label="Pesquisar contato" aria-describedby="button-pesquisar">
+    <button class="btn btn-outline-secondary" type="submit" id="button-pesquisar"><i class="fas fa-search"></i> Pesquisar</button>
     
     <!-- Botão flutuante para adicionar novo contato -->
     <button type="button" class="btn btn-primary ml-2 btn-float" data-bs-toggle="modal" data-bs-target="#addContactModal">
@@ -32,6 +32,8 @@
     <br>
 {% endif %}
 
+
+{% if contatos %}
 <div class="content-table">
 <!-- Tabela de contatos -->
 <table class="table">
@@ -59,18 +61,105 @@
                 <td>{{ contato[3] }}</td>
                 <td>{{ contato[4] }}</td>
                 <td>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editContactModal{{ contato['id'] }}">
+
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editContactModal{{ contato[0] }}"
+                    data-nome="{{ contato[1] }}" data-email="{{ contato[2] }}" data-endereco="{{ contato[3] }}" data-telefone="{{ contato[4] }}">
                         Editar
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ contato['id'] }}">
-                        Excluir
-                    </button>
+
+                    <!-- Modal para editar contato -->
+                    <div class="modal fade" id="editContactModal{{ contato[0] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Contato</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('contatos.editar_contato') }}" method="post">
+                                        <input type="hidden" name="id" value="{{ contato[0] }}">
+                                        <div class="form-group">
+                                            <label for="editNome">Nome</label>
+                                            <input type="text" class="form-control" id="editNome" name="editNome" value="{{ contato[1] }}" placeholder="Informe o novo nome">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmail">Email</label>
+                                            <input type="email" class="form-control" id="editEmail" name="editEmail" value="{{ contato[2] }}" placeholder="Informe o novo email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEndereco">Endereço</label>
+                                            <input type="text" class="form-control" id="editEndereco" name="editEndereco" value="{{ contato[3] }}" placeholder="Informe o novo endereço">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editTelefone">Telefone</label>
+                                            <input type="tel" class="form-control" id="editTelefone" name="editTelefone" value="{{ contato[4] }}" placeholder="Informe o novo telefone">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form action="{{ url_for('contatos.exluir_contato') }}" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="{{ contato[0] }}">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ contato[0] }}">
+                            Excluir
+                        </button>
+                    </form>
+
+                    <!-- Modal de confirmação de exclusão -->
+                    <div class="modal fade" id="confirmDeleteModal{{ contato[0] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Exclusão</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza de que deseja excluir o contato {{ contato[1] }}?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{{ url_for('contatos.exluir_contato') }}" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="{{ contato[0] }}">
+                                        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
 </div>
+
+
+{% else %}
+
+<div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Bem-vindo ao Sistema!</h4>
+    <p>
+        Parece que esta é a sua primeira vez aqui. 
+        Por favor, adicione seu primeiro contato para começar a utilizar o sistema.
+    </p>
+    <hr>
+</div>
+
+<div class="alert alert-info" role="alert">
+    <p>
+        O requisito mínimo para criar um contato é definir um nome.
+    </p>
+    <hr>
+</div>
+
+{% endif %}
+
 
 <!-- Modal para adicionar novo contato -->
 <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -107,56 +196,6 @@
     </div>
 </div>
 
-<!-- Modal para editar contato -->
-<div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Contato</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="editNome">Nome</label>
-                        <input type="text" class="form-control" id="editNome" placeholder="Informe o novo nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEndereco">Endereço</label>
-                        <input type="text" class="form-control" id="editEndereco" placeholder="Informe o novo endereço">
-                    </div>
-                    <div class="form-group">
-                        <label for="editTelefone">Telefone</label>
-                        <input type="tel" class="form-control" id="editTelefone" placeholder="Informe o novo telefone">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal de confirmação de exclusão -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmar Exclusão</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza de que deseja excluir este contato?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger">Confirmar Exclusão</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <script src="{{ url_for('static', filename='js/pages/private/profile.js') }}"></script>

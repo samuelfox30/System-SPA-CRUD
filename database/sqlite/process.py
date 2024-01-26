@@ -116,8 +116,6 @@ class ContactsDatabase:
             linhas = self.cursor.fetchall()
             for linha in linhas:
                 contatos.append(linha)
-                print(linha)
-            print(contatos)
             return contatos
         except Exception as error:
             print(f'\n\nOcorreu um erro ao exibir os contatos: {error}\n\n')
@@ -137,6 +135,49 @@ class ContactsDatabase:
             return True
         except Exception as error:
             print(f'\n\nOcorreu um erro ao tentar adicionar um contato: {error}\n\n')
+            return False
+        finally:
+            self.conn.commit()
+
+
+    def excluir(self, id) -> bool:
+        try:
+            self.cursor.execute(f"DELETE FROM {self.sessao} WHERE ID=?", (id,))
+            print(f'Contato excluido com sucesso')
+            return True
+        except Exception as error:
+            print(f'\n\nOcorreu um erro ao excluir um contato: {error}\n\n')
+            return False
+        finally:
+            self.conn.commit()
+
+
+    def editar(self, id, contato) -> bool:
+        try:
+            novo_nome = contato.nome
+            novo_email = contato.email
+            novo_endereco = contato.endereco
+            novo_telefone = contato.telefone
+            self.cursor.execute(f'UPDATE {self.sessao} SET NOME=?, EMAIL=?, ENDERECO=?, TELEFONE=? WHERE ID=?',(novo_nome, novo_email, novo_endereco, novo_telefone, id))
+            print(f'Contato editado com sucesso')
+            return True
+        except Exception as error:
+            print(f'\n\nOcorreu um erro ao editar um contato: {error}\n\n')
+            return False
+        finally:
+            self.conn.commit()
+
+
+    def pesquisar(self, dado):
+        try:
+            self.cursor.execute(f'SELECT * FROM {self.sessao} WHERE NOME = ? OR EMAIL = ? OR ENDERECO = ? OR SENHA = ?', (dado, dado, dado, dado))
+            result = self.cursor.fetchall()
+            if not result:
+                return False
+            else:
+                return result
+        except Exception as error:
+            print(f'Ocorreu um erro ao pesquisar por um dado: {error}')
             return False
         finally:
             self.conn.commit()

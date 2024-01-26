@@ -7,7 +7,7 @@ app_profile = Blueprint('profile', __name__)
 def profile():
     if 'user' in session:
         sessao = session['user']
-        from pages.private.profile.profile_manager import exibircontatos
+        from pages.private.profile.contatos_manager import exibircontatos
         contatos = exibircontatos(sessao)
         return render_template('pages/private/profile.html', contatos=contatos)
     else:
